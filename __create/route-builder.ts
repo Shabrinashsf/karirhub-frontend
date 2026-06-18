@@ -1,4 +1,5 @@
 import { readdir, stat } from 'node:fs/promises';
+import { statSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Hono } from 'hono';
@@ -8,8 +9,27 @@ import updatedFetch from '../src/__create/fetch';
 const API_BASENAME = '/api';
 const api = new Hono();
 
-// Get current directory
-const __dirname = join(fileURLToPath(new URL('.', import.meta.url)), '../src/app/api');
+// Resolve the API routes directory relative to project root
+// Works both in source and after build
+const __dirname = (() => {
+  const currentFile = fileURLToPath(new URL('.', import.meta.url));
+  // In build/server/assets/ go up to project root
+  const possibleRoots = [
+    join(currentFile, '../../../src/app/api'),
+    join(currentFile, '../../src/app/api'),
+    join(currentFile, '../src/app/api'),
+  ];
+  for (const root of possibleRoots) {
+    try {
+      const s = statSync(root);
+      if (s.isDirectory()) return root;
+    } catch {
+      // ignore
+    }
+  }
+  // fallback: assume cwd is project root
+  return join(process.cwd(), 'src/app/api');
+})();
 if (globalThis.fetch) {
   globalThis.fetch = updatedFetch;
 }
