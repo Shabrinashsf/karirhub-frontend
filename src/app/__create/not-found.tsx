@@ -1,79 +1,13 @@
-import fg from 'fast-glob';
-import type { Route } from './+types/not-found';
-import { useNavigate } from 'react-router';
-import { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router';
+import { useCallback } from 'react';
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const matches = await fg('src/**/page.{js,jsx,ts,tsx}');
-  return {
-    path: `/${params['*']}`,
-    pages: matches
-      .sort((a, b) => a.length - b.length)
-      .map((match) => {
-        const url = match.replace('src/app', '').replace(/\/page\.(js|jsx|ts|tsx)$/, '') || '/';
-        const path = url.replaceAll('[', '').replaceAll(']', '');
-        const displayPath = path === '/' ? 'Homepage' : path;
-        return { url, path: displayPath };
-      }),
-  };
-}
-
-interface ParentSitemap {
-  webPages?: Array<{
-    id: string;
-    name: string;
-    filePath: string;
-    cleanRoute?: string;
-  }>;
-}
-
-export default function CreateDefaultNotFoundPage({
-  loaderData,
-}: {
-  loaderData: Awaited<ReturnType<typeof loader>>;
-}) {
-  const [siteMap, setSitemap] = useState<ParentSitemap | null>(null);
+export default function CreateDefaultNotFoundPage() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.parent && window.parent !== window) {
-      const handler = (event: MessageEvent) => {
-        if (event.data.type === 'sandbox:sitemap') {
-          window.removeEventListener('message', handler);
-          setSitemap(event.data.sitemap);
-        }
-      };
-
-      window.parent.postMessage(
-        {
-          type: 'sandbox:sitemap',
-        },
-        '*'
-      );
-      window.addEventListener('message', handler);
-
-      return () => {
-        window.removeEventListener('message', handler);
-      };
-    }
-  }, []);
-  const missingPath = loaderData.path.replace(/^\//, '');
-  const existingRoutes = loaderData.pages.map((page) => ({
-    path: page.path,
-    url: page.url,
-  }));
+  const location = useLocation();
+  const missingPath = location.pathname.replace(/^\//, '');
 
   const handleBack = () => {
     navigate('/');
-  };
-
-  const handleSearch = (value: string) => {
-    if (!siteMap) {
-      const path = `/${value}`;
-      navigate(path);
-    } else {
-      navigate(value);
-    }
   };
 
   const handleCreatePage = useCallback(() => {
@@ -172,44 +106,15 @@ export default function CreateDefaultNotFoundPage({
           </p>
         </div>
 
-        {siteMap ? (
-          <div className="flex flex-col justify-center items-center w-full px-[50px]">
-            <div className="flex flex-col justify-between items-center w-full max-w-[600px] gap-[10px]">
-              <p className="text-sm text-gray-300 pb-[10px] self-start p-4">PAGES</p>
-              {siteMap.webPages?.map((route) => (
-                <button
-                  type="button"
-                  onClick={() => handleSearch(route.cleanRoute || '')}
-                  key={route.id}
-                  className="flex flex-row justify-between text-center items-center p-4 rounded-lg bg-white shadow-sm w-full hover:bg-gray-50"
-                >
-                  <h3 className="font-medium text-gray-900">{route.name}</h3>
-                  <p className="text-sm text-gray-400">{route.cleanRoute}</p>
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-wrap gap-3 w-full max-w-[80rem] mx-auto pb-5 px-2">
-            {existingRoutes.map((route) => (
-              <div
-                key={route.path}
-                className="flex flex-col flex-grow basis-full sm:basis-[calc(50%-0.375rem)] xl:basis-[calc(33.333%-0.5rem)]"
-              >
-                <div className="w-full flex-1 flex flex-col items-center ">
-                  <div className="relative w-full max-w-[350px] h-48 sm:h-56 lg:h-64 overflow-hidden rounded-[8px] border border-comeback-gray-75 transition-all group-hover:shadow-md">
-                    <button
-                      type="button"
-                      onClick={() => handleSearch(route.url.replace(/^\//, ''))}
-                      className="h-full w-full rounded-[8px] bg-gray-50 bg-cover"
-                    />
-                  </div>
-                  <p className="pt-3 text-left text-gray-500 w-full max-w-[350px]">{route.path}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="pb-10">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Go Back Home
+          </button>
+        </div>
       </div>
     </div>
   );
