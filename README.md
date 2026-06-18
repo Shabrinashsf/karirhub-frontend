@@ -55,7 +55,7 @@ KarirHub adalah sebuah **platform rekrutmen digital** berbasis web yang dirancan
 | **Database**        | Neon Postgres                           |
 | **Auth**            | Auth.js (Credentials Provider)          |
 | **Build Tool**      | Vite 6                                  |
-| **Package Manager** | Bun                                     |
+| **Package Manager** | npm                                     |
 | **Testing**         | Vitest + jsdom + Testing Library        |
 | **Type Checking**   | TypeScript                              |
 
@@ -108,8 +108,8 @@ KarirHub adalah sebuah **platform rekrutmen digital** berbasis web yang dirancan
 
 ### Prasyarat
 
-- [Bun](https://bun.sh) v1.2.8 atau lebih baru
 - Node.js 20+ (untuk compatibility)
+- npm 10+ (disarankan)
 
 ### Instalasi
 
@@ -119,13 +119,13 @@ git clone <repository-url>
 cd Final-Project-MBD-KarirHub
 
 # Install dependencies
-bun install
+npm install
 ```
 
 ### Menjalankan Development Server
 
 ```bash
-bun dev
+npm run dev
 ```
 
 Server akan berjalan di `http://localhost:4000`.
@@ -133,17 +133,17 @@ Server akan berjalan di `http://localhost:4000`.
 ### Type Checking
 
 ```bash
-bun typecheck
+npm run typecheck
 ```
 
 ### Testing
 
 ```bash
 # Run all tests
-bunx vitest run
+npx vitest run
 
 # Run specific test pattern
-bunx vitest run <pattern>
+npx vitest run <pattern>
 ```
 
 ---
