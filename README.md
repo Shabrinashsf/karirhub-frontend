@@ -2,12 +2,6 @@
 
 > **Platform rekrutmen digital** yang menghubungkan pencari kerja dengan perusahaan di Indonesia secara efisien dan transparan.
 
-[![Tech Stack](https://img.shields.io/badge/React_Router-v7-blue)](https://reactrouter.com)
-[![Tech Stack](https://img.shields.io/badge/Tailwind_CSS-v3-38B2AC)](https://tailwindcss.com)
-[![Tech Stack](https://img.shields.io/badge/Hono-Runtime-orange)](https://hono.dev)
-
----
-
 ## Deskripsi
 
 KarirHub adalah sebuah **platform rekrutmen digital** berbasis web yang dirancang sebagai Final Project untuk mata kuliah **Manajemen Basis Data D** di Institut Teknologi Sepuluh Nopember (ITS). Platform ini menghubungkan tiga pihak utama:
@@ -22,26 +16,26 @@ KarirHub adalah sebuah **platform rekrutmen digital** berbasis web yang dirancan
 
 ### Untuk Pencari Kerja
 
-- 🔍 Pencarian lowongan dengan filter (kata kunci, kota, tipe pekerjaan, tipe kerja)
-- 📋 Melamar pekerjaan dengan cover letter
-- 📊 Dashboard dengan statistik lamaran
-- 🔔 Notifikasi status lamaran
-- 👤 Profil dengan pendidikan, pengalaman kerja, dan skill
+- Pencarian lowongan dengan filter (kata kunci, kota, tipe pekerjaan, tipe kerja)
+- Melamar pekerjaan dengan cover letter
+- Dashboard dengan statistik lamaran
+- Notifikasi status lamaran
+- Profil dengan pendidikan, pengalaman kerja, dan skill
 
 ### Untuk Perusahaan
 
-- 📝 Membuat, mengedit, dan mengelola lowongan pekerjaan
-- 👥 Melihat dan mengelola pelamar
-- ✅ Menyaring pelamar melalui tahapan rekrutmen
-- 📅 Menjadwalkan wawancara (online/onsite)
-- 🔔 Notifikasi pelamar baru
+- Membuat, mengedit, dan mengelola lowongan pekerjaan
+- Melihat dan mengelola pelamar
+- Menyaring pelamar melalui tahapan rekrutmen
+- Menjadwalkan wawancara (online/onsite)
+- Notifikasi pelamar baru
 
 ### Untuk Admin
 
-- 📈 Dashboard platform dengan statistik keseluruhan
-- ✅ Verifikasi akun perusahaan
-- 🏷️ Kelola master data skill
-- 📋 Pantau aktivitas platform
+- Dashboard platform dengan statistik keseluruhan
+- Verifikasi akun perusahaan
+- Kelola master data skill
+- Pantau aktivitas platform
 
 ---
 
